@@ -1,4 +1,7 @@
+/** @format */
+
 import type { Config } from "tailwindcss";
+import daisyui from "daisyui";
 
 export default {
   content: [
@@ -12,7 +15,11 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      fontFamily: {
+        "amsterdam-one": ["amsterdam-one", "sans-serif"],
+        quicksand: ["quicksand", "sans-serif"],
+      },
     },
   },
-  plugins: [],
+  plugins: [daisyui],
 } satisfies Config;

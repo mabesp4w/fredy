@@ -1,3 +1,5 @@
+/** @format */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -18,4 +20,53 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* font AmsterdamOne */
+@font-face {
+  font-family: "amsterdam-one";
+  src: url("/fonts/AmsterdamOne/AmsterdamOne.ttf") format("truetype");
+}
+
+/* font Quicksand */
+@font-face {
+  font-family: "quicksand";
+  src: url("/fonts/Quicksand/Quicksand-Book.otf") format("truetype");
+}
+
+/* font Quicksand oblique */
+@font-face {
+  font-family: "quicksand";
+  src: url("/fonts/Quicksand/Quicksand-Book-Oblique.otf") format("truetype");
+  font-style: oblique;
+}
+
+/* font Quicksand bold */
+@font-face {
+  font-family: "quicksand";
+  src: url("/fonts/Quicksand/Quicksand-Bold.otf") format("truetype");
+  font-weight: bold;
+}
+
+/* font Quicksand bold oblique */
+@font-face {
+  font-family: "quicksand";
+  src: url("/fonts/Quicksand/Quicksand-Bold-Oblique.otf") format("truetype");
+  font-weight: bold;
+  font-style: oblique;
+}
+
+/* font Quicksand light */
+@font-face {
+  font-family: "quicksand";
+  src: url("/fonts/Quicksand/Quicksand-Light.otf") format("truetype");
+  font-weight: 300;
+}
+
+/* font Quicksand light oblique */
+@font-face {
+  font-family: "quicksand";
+  src: url("/fonts/Quicksand/Quicksand-Light-Oblique.otf") format("truetype");
+  font-weight: 300;
+  font-style: oblique;
 }
