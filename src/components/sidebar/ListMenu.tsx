@@ -1,160 +1,52 @@
 /** @format */
 import MenuTypes from "@/types/MenuTypes";
 
-import {
-  BsActivity,
-  BsAlarm,
-  BsBook,
-  BsBricks,
-  BsHouseDoor,
-  BsNewspaper,
-  BsPerson,
-  BsPlayBtnFill,
-} from "react-icons/bs";
+import { BsBook, BsHouseDoor, BsSend } from "react-icons/bs";
+import { IoFastFoodOutline } from "react-icons/io5";
 
-const createUrl = (path: string) => `/roles/admin${path}`;
+const createUrl = (path: string) => `/admin${path}`;
 
 const setAdminMenus = async () => {
   const ListMenu: MenuTypes[] = [
     {
       name: "Home",
-      href: createUrl("/dashboard"),
+      href: createUrl(""),
       icon: <BsHouseDoor />,
     },
     {
-      name: "Pengumuman",
-      href: createUrl("/announcements"),
-      icon: <BsActivity />,
-    },
-    {
-      name: "Berita",
-      href: createUrl("/news"),
-      icon: <BsNewspaper />,
-    },
-
-    {
-      name: "Slide",
-      href: createUrl("/slides"),
-      icon: <BsPlayBtnFill />,
-    },
-    {
-      name: "Galeri",
-      slug: "galleries",
-      icon: <BsPerson />,
+      name: "Ongkir",
+      slug: "shippings",
+      icon: <BsSend />,
       subMenus: [
         {
-          name: "Foto",
-          href: createUrl("/galleries/photos"),
+          name: "Kecamatan",
+          href: createUrl("/shippings/subDistricts"),
         },
         {
-          name: "Vidio",
-          href: createUrl("/galleries/videos"),
+          name: "Kelurahan",
+          href: createUrl("/shippings/shippingCosts"),
         },
       ],
     },
     {
-      name: "Mapel",
-      href: createUrl("/subjects"),
+      name: "Makanan",
+      slug: "foods",
+      icon: <IoFastFoodOutline />,
+      subMenus: [
+        {
+          name: "Jenis",
+          href: createUrl("/foods/categories"),
+        },
+        {
+          name: "Daftar",
+          href: createUrl("/foods/lists"),
+        },
+      ],
+    },
+    {
+      name: "Pesanan",
+      href: createUrl("/orders"),
       icon: <BsBook />,
-    },
-    {
-      name: "Pegawai / Staf",
-      slug: "employees",
-      icon: <BsPerson />,
-      subMenus: [
-        {
-          name: "Guru",
-          href: createUrl("/employees/guru"),
-        },
-        {
-          name: "Tendik",
-          href: createUrl("/employees/tendik"),
-        },
-        {
-          name: "Satpam",
-          href: createUrl("/employees/satpam"),
-        },
-        {
-          name: "Pekarya",
-          href: createUrl("/employees/pekarya"),
-        },
-      ],
-    },
-
-    {
-      name: "Siswa",
-      slug: "students",
-      icon: <BsPerson />,
-      subMenus: [
-        {
-          name: "Daftar",
-          href: createUrl("/students/lists"),
-        },
-        {
-          name: "Status",
-          href: createUrl("/students/statuses"),
-        },
-        {
-          name: "Osis",
-          href: createUrl("/students/osis"),
-        },
-      ],
-    },
-    {
-      name: "Prestasi",
-      slug: "achievements",
-      icon: <BsPerson />,
-      subMenus: [
-        {
-          name: "Kategori",
-          href: createUrl("/achievements/categories"),
-        },
-        {
-          name: "Siswa",
-          href: createUrl("/achievements/students"),
-        },
-      ],
-    },
-    {
-      name: "Kelas",
-      slug: "shoolClasses",
-      icon: <BsBricks />,
-      subMenus: [
-        {
-          name: "Daftar",
-          href: createUrl("/shoolClasses/lists"),
-        },
-        {
-          name: "Siswa",
-          href: createUrl("/shoolClasses/studentClasses"),
-        },
-      ],
-    },
-    {
-      name: "Jadwal",
-      href: createUrl("/schedules"),
-      icon: <BsAlarm />,
-    },
-
-    {
-      name: "Kegiatan",
-      slug: "activities",
-      icon: <BsPerson />,
-      subMenus: [
-        {
-          name: "Kalender Akademik",
-          href: createUrl("/activities/academicCalendars"),
-        },
-        {
-          name: "Ektrakulikuler",
-          href: createUrl("/activities/extracurricular/categories"),
-        },
-      ],
-    },
-    {
-      name: "Fasilitas",
-      href: createUrl("/facilities"),
-      icon: <BsAlarm />,
     },
   ];
 

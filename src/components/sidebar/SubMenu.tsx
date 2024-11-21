@@ -71,8 +71,8 @@ const SubMenu: FC<Props> = ({
                 {!subMenu.subMenus && (
                   <Link
                     href={subMenu.href || "#"}
-                    className={`flex items-center mx-3 py-2 transition-colors duration-300 transform rounded-lg hover:text-fifth hover:font-normal ${
-                      isActiveSub && " text-fifth font-bold"
+                    className={`flex items-center mx-3 py-2 transition-colors duration-300 transform hover:text-neutral hover:underline rounded-lg group ${
+                      isActiveSub && "text-accent font-bold"
                     }`}
                   >
                     <span className="mx-2">{subMenu.name}</span>

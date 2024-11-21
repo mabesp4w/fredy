@@ -15,9 +15,9 @@ import useLogout from "@/stores/auth/logout";
 import MenuTypes from "@/types/MenuTypes";
 import SubMenu from "./SubMenu";
 import LoadingSpiner from "../loading/LoadingSpiner";
-import handleLogout from "@/app/auth/logout/logout";
 import Image from "next/image";
 import { setAdminMenus } from "./ListMenu";
+import handleLogout from "@/app/auth/logout/logout";
 type Props = {
   type?: string;
 };
@@ -69,76 +69,74 @@ const Sidebar: FC<Props> = ({ type = "admin" }) => {
   }, [menus, pathname]);
 
   return (
-    <>
-      <aside
-        className={`z-40 w-full h-screen transition-transform -translate-x-full sm:translate-x-0`}
-        aria-label="Sidebar"
-      >
-        <div className="sidebar z-50 h-full px-3 pt-4 overflow-y-auto text-third flex flex-row-reverse justify-between sm:block">
-          <div className="flex flex-col gap-4 h-full sidebar w-full overflow-hidden">
-            <div className="h-24 sidebar">
-              <Image
-                alt="logo"
-                src="/images/katada.png"
-                className="mx-auto mb-3"
-                width={80}
-                height={80}
-              />
-            </div>
-            <ul className="space-y-2 grow w-full h-full overflow-auto scrollbar list-none p-0">
-              {menus &&
-                menus.map((menu, index) => {
-                  const isActive = pathname === menu.href;
-                  const subMenus = menu?.subMenus;
-                  const { name, icon, slug } = menu;
-                  const truncatedName =
-                    name.length > 10 ? name.slice(0, 10) + "..." : name;
-
-                  return subMenus ? (
-                    SubMenu({
-                      subMenus,
-                      name,
-                      truncatedName,
-                      icon,
-                      slug,
-                      index,
-                      pathname,
-                      openMenus,
-                    })
-                  ) : (
-                    <li key={index}>
-                      <Link
-                        href={menu.href || "#"}
-                        className={`flex w-full items-center p-2 text-color-2 hover:text-fifth hover:font-normal transition-all duration-300 rounded-lg group ${
-                          isActive && "bg-my-orange text-fifth font-bold"
-                        }`}
-                        title={name}
-                      >
-                        {icon}
-                        <span className="ms-3">{truncatedName}</span>
-                      </Link>
-                    </li>
-                  );
-                })}
-            </ul>
-            {loadLogout ? (
-              <LoadingSpiner />
-            ) : (
-              <div className="flex justify-center">
-                <BtnDefault
-                  addClass="bg-secondary text-fourth"
-                  onClick={() =>
-                    handleLogout({ setLogout, setLoadLogout, route })
-                  }
-                >
-                  Logout
-                </BtnDefault>
-              </div>
-            )}
+    <aside
+      className={`z-40 w-full h-screen transition-transform -translate-x-full sm:translate-x-0 shadow-neutral shadow-sm`}
+      aria-label="Sidebar"
+    >
+      <div className="sidebar z-50 h-full px-3 pt-4 overflow-y-auto text-third flex flex-row-reverse justify-between sm:block">
+        <div className="flex flex-col gap-4 h-full sidebar w-full overflow-hidden">
+          <div className="h-28 sidebar -mt-10 -ml-10">
+            <Image
+              alt="logo"
+              src="/images/logo.png"
+              className="mx-auto mb-3"
+              width={150}
+              height={120}
+            />
           </div>
+          <ul className="space-y-2 grow w-full h-full overflow-auto scrollbar list-none p-0 select-none">
+            {menus &&
+              menus.map((menu, index) => {
+                const isActive = pathname === menu.href;
+                const subMenus = menu?.subMenus;
+                const { name, icon, slug } = menu;
+                const truncatedName =
+                  name.length > 10 ? name.slice(0, 10) + "..." : name;
+
+                return subMenus ? (
+                  SubMenu({
+                    subMenus,
+                    name,
+                    truncatedName,
+                    icon,
+                    slug,
+                    index,
+                    pathname,
+                    openMenus,
+                  })
+                ) : (
+                  <li key={index}>
+                    <Link
+                      href={menu.href || "#"}
+                      className={`flex w-full items-center p-2 hover:text-neutral hover:underline transition-all duration-300 rounded-lg group ${
+                        isActive && "text-accent font-bold"
+                      }`}
+                      title={name}
+                    >
+                      {icon}
+                      <span className="ms-3">{truncatedName}</span>
+                    </Link>
+                  </li>
+                );
+              })}
+          </ul>
+          {loadLogout ? (
+            <LoadingSpiner />
+          ) : (
+            <div className="flex justify-center">
+              <BtnDefault
+                addClass="bg-primary"
+                onClick={() =>
+                  handleLogout({ setLogout, setLoadLogout, route })
+                }
+              >
+                Logout
+              </BtnDefault>
+            </div>
+          )}
         </div>
-      </aside>
-    </>
+      </div>
+    </aside>
   );
 };
 

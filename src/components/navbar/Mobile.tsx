@@ -1,11 +1,11 @@
 /** @format */
 
 import Link from "next/link";
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
-import ListMenu, { MainMenu } from "./ListMenu";
 import MenuTypes from "@/types/MenuTypes";
+import { setUsersMenus } from "./ListMenu";
 
 const Mobile: FC = () => {
   // Define animation variants
@@ -15,14 +15,25 @@ const Mobile: FC = () => {
     exit: { opacity: 0, y: -20 },
   };
 
+  const [menus, setMenus] = useState<MenuTypes[]>([]);
+
   const pathname = usePathname();
+
+  const getMenuDynamic = async () => {
+    const res = await setUsersMenus();
+    setMenus(res);
+  };
+
+  useEffect(() => {
+    getMenuDynamic();
+  }, []);
 
   // state
   return (
     <div className="h-full px-3 py-4 overflow-y-auto bg-menu-active">
       <ul className="space-y-2 font-medium">
-        {ListMenu &&
-          ListMenu.map((item: MenuTypes, index: number) => {
+        {menus &&
+          menus.map((item: MenuTypes, index: number) => {
             const isActive = pathname === item.href;
             return (
               <motion.li
@@ -52,8 +63,8 @@ const Mobile: FC = () => {
       {/* garis */}
       <hr className="mt-4" />
       <ul className="space-y-2 font-medium mt-2">
-        {MainMenu &&
-          MainMenu.map((item, index) => {
+        {menus &&
+          menus.map((item, index) => {
             const isActive = pathname === item.href;
             return (
               <motion.li

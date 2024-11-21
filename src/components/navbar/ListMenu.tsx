@@ -15,21 +15,6 @@ const setUsersMenus = async () => {
       href: createUrl("/announcements"),
       icon: <BsActivity />,
     },
-    {
-      name: "Shop",
-      slug: "shop",
-      icon: <BsPerson />,
-      subMenus: [
-        {
-          name: "Product",
-          href: createUrl("/shop/photos"),
-        },
-        {
-          name: "Cart",
-          href: createUrl("/shop/videos"),
-        },
-      ],
-    },
 
     {
       name: "Galeri",

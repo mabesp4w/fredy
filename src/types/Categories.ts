@@ -1,8 +1,7 @@
-import SubCategoriesTypes from "./SubCategories";
+/** @format */
 
 export default interface CategoriesTypes {
-    id: string;
-    category_nm: string;
-    slug: string;
-    sub_category: SubCategoriesTypes[];
+  id: string;
+  category_nm: string;
+  slug: string;
 }

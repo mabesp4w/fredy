@@ -19,7 +19,28 @@ export default {
         "amsterdam-one": ["amsterdam-one", "sans-serif"],
         quicksand: ["quicksand", "sans-serif"],
       },
+      container: {
+        center: true,
+      },
+      backgroundImage: {
+        "dapoer-alea": "url('/images/dapoer-alea.jpg')",
+      },
     },
+  },
+  daisyui: {
+    themes: [
+      {
+        mytheme: {
+          primary: "#8B5A2B",
+          secondary: "#F5F5DC",
+          accent: "#FF8C00",
+          neutral: "#228B22",
+          "base-100": "#ffffff",
+        },
+      },
+      "dark",
+      "cupcake",
+    ],
   },
   plugins: [daisyui],
 } satisfies Config;
