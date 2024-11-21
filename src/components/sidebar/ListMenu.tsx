@@ -39,7 +39,7 @@ const setAdminMenus = async () => {
         },
         {
           name: "Daftar",
-          href: createUrl("/foods/lists"),
+          href: createUrl("/foods/products"),
         },
       ],
     },

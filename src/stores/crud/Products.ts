@@ -78,7 +78,7 @@ const useProducts = create(
         });
         set((state) => ({
           ...state,
-          dtProducts: response.data,
+          dtProducts: response.data.data,
         }));
         console.log({ response });
         return {
