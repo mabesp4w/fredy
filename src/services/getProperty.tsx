@@ -11,6 +11,7 @@ import { BASE_URL } from "./baseURL";
 import Image from "next/image";
 import moment from "moment";
 import DOMPurify from "dompurify";
+import showRupiah from "./rupiah";
 
 const getYouTubeVideoId = (url: string) => {
   const regExp =
@@ -41,37 +42,20 @@ const getProperty = (obj: any, prop: any, index: number, setIndexBox: any) => {
       return obj ? obj[last] : "";
     }
     // date pros
-    const dateProps = [
-      "start_date",
-      "end_date",
-      "tgl",
-      "birthdate",
-      "date",
-      "announcement_date",
-      "new_date",
-      "hire_date",
-      "term_start",
-      "term_end",
-      "date_achievement",
-    ];
+    const dateProps = ["start_date", "end_date"];
     // cek date
     if (dateProps.includes(prop)) {
       return moment(obj).format("DD/MM/YYYY");
     }
+    // check currecy
+    // date pros
+    const currencyProps = ["shipping_cost"];
+    // cek date
+    if (currencyProps.includes(prop)) {
+      return showRupiah(obj);
+    }
     // cek image
-    const fileProps = [
-      "gambar",
-      "foto",
-      "img_student",
-      "img_teacher",
-      "img_slide",
-      "img_news",
-      "photo_path",
-      "img_employee",
-      "thumb_category",
-      "img_facility",
-      "img_achievement",
-    ];
+    const fileProps = ["gambar", "foto"];
     // cek image
     if (fileProps.includes(prop)) {
       const extension = obj.split(".").pop();

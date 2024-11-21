@@ -82,7 +82,7 @@ const useShippingCosts = create(
         });
         set((state) => ({
           ...state,
-          dtShippingCosts: response.data,
+          dtShippingCosts: response.data.data,
         }));
         console.log({ response });
         return {

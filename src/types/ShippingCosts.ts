@@ -1,8 +1,11 @@
-import VillagesTypes from "./Villages";
+/** @format */
+
+import SubDistrictsTypes from "./SubDistricts";
 
 export default interface ShippingCostsTypes {
-    id: string;
-    village_id: string;
-    shipping_cost: number;
-    village: VillagesTypes;
+  id: string;
+  sub_district_id: string;
+  village_nm: string;
+  shipping_cost: number;
+  sub_district: SubDistrictsTypes;
 }
