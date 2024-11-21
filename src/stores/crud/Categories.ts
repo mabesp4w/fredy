@@ -76,7 +76,7 @@ const useCategories = create(
         });
         set((state) => ({
           ...state,
-          dtCategories: response.data,
+          dtCategories: response.data.data,
         }));
         console.log({ response });
         return {
