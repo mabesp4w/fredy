@@ -3,25 +3,24 @@
 import LoadingSpiner from "@/components/loading/LoadingSpiner";
 import PaginationDefault from "@/components/pagination/PaginationDefault";
 import TablesDefault from "@/components/tables/TablesDefault";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { FC, useCallback, useEffect, useState } from "react";
 import _ from "lodash";
-import useProducts from "@/stores/crud/Products";
-import ProductsTypes from "@/types/Products";
-import { BsCake } from "react-icons/bs";
+import useVariants from "@/stores/crud/Variants";
+import VariantsTypes from "@/types/Variants";
 
 type DeleteProps = {
   id?: number | string;
   isDelete: boolean;
 };
-// products
+// variants
 type Props = {
   setDelete: ({ id, isDelete }: DeleteProps) => void;
-  setEdit: (row: ProductsTypes) => void;
+  setEdit: (row: VariantsTypes) => void;
 };
 
 const ShowData: FC<Props> = ({ setDelete, setEdit }) => {
-  const { setProducts, dtProducts } = useProducts();
+  const { setVariants, dtVariants } = useVariants();
   // state
   const [page, setPage] = useState<number>(1);
   const [limit, setLimit] = useState<number>(10);
@@ -31,17 +30,15 @@ const ShowData: FC<Props> = ({ setDelete, setEdit }) => {
   const sortby = searchParams?.get("sortby") || "";
   const order = searchParams?.get("order") || "";
   const search = searchParams?.get("cari") || "";
-  // router
-  const router = useRouter();
 
   // Define the debounced function outside of `useCallback`
-  const debouncedFetchProducts = _.debounce((fetchProducts) => {
-    fetchProducts();
+  const debouncedFetchVariants = _.debounce((fetchVariants) => {
+    fetchVariants();
   }, 500); // 500ms delay
 
-  const fetchProducts = useCallback(async () => {
+  const fetchVariants = useCallback(async () => {
     setLimit(10);
-    await setProducts({
+    await setVariants({
       page,
       limit,
       search,
@@ -49,33 +46,25 @@ const ShowData: FC<Props> = ({ setDelete, setEdit }) => {
       order,
     });
     setIsLoading(false);
-  }, [setProducts, page, limit, search, sortby, order]);
+  }, [setVariants, page, limit, search, sortby, order]);
 
   useEffect(() => {
-    debouncedFetchProducts(fetchProducts);
+    debouncedFetchVariants(fetchVariants);
 
     // Cleanup debounce
     return () => {
-      debouncedFetchProducts.cancel();
+      debouncedFetchVariants.cancel();
     };
   }, [search, sortby, order, page, limit]);
 
   // table
-  const headTable = ["No", "Jenis", "Nama", "Aksi"];
-  const tableBodies = ["category.category_nm", "product_nm"];
+  const headTable = ["No", "Kecamatan", "Kelurahan", "Ongkos", "Aksi"];
+  const tableBodies = [
+    "sub_district.sub_district_nm",
+    "village_nm",
+    "shipping_cost",
+  ];
 
-  const gotTo = (href: string) => router.push(href);
-
-  const costume = (row: ProductsTypes) => {
-    return (
-      <div className="flex space-x-4 mx-2">
-        <BsCake
-          className="cursor-pointer hover:text-primary"
-          onClick={() => gotTo(`/admin/foods/${row.id}/variants`)}
-        />
-      </div>
-    );
-  };
   return (
     <div className="flex-1 flex-col max-w-full h-full overflow-auto">
       {isLoading ? (
@@ -86,21 +75,20 @@ const ShowData: FC<Props> = ({ setDelete, setEdit }) => {
             <TablesDefault
               headTable={headTable}
               tableBodies={tableBodies}
-              dataTable={dtProducts?.data}
+              dataTable={dtVariants?.data}
               page={page}
               limit={limit}
               setEdit={setEdit}
               setDelete={setDelete}
               ubah={true}
               hapus={true}
-              costume={costume}
             />
           </div>
-          {dtProducts?.last_page > 1 && (
+          {dtVariants?.last_page > 1 && (
             <div className="mt-4">
               <PaginationDefault
-                currentPage={dtProducts?.current_page}
-                totalPages={dtProducts?.last_page}
+                currentPage={dtVariants?.current_page}
+                totalPages={dtVariants?.last_page}
                 setPage={setPage}
               />
             </div>

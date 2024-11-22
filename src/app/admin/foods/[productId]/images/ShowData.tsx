@@ -3,45 +3,46 @@
 import LoadingSpiner from "@/components/loading/LoadingSpiner";
 import PaginationDefault from "@/components/pagination/PaginationDefault";
 import TablesDefault from "@/components/tables/TablesDefault";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { FC, useCallback, useEffect, useState } from "react";
 import _ from "lodash";
-import useProducts from "@/stores/crud/Products";
-import ProductsTypes from "@/types/Products";
-import { BsCake } from "react-icons/bs";
+import lightImgDB from "@/components/lightBox/lightImgDB";
+import LightPlugins from "@/components/lightBox/LightPlugins";
+import ProductImagesTypes from "@/types/ProductImages";
+import useProductImages from "@/stores/crud/ProductImages";
 
 type DeleteProps = {
   id?: number | string;
   isDelete: boolean;
 };
-// products
+// productImages
 type Props = {
   setDelete: ({ id, isDelete }: DeleteProps) => void;
-  setEdit: (row: ProductsTypes) => void;
+  setEdit: (row: ProductImagesTypes) => void;
 };
 
 const ShowData: FC<Props> = ({ setDelete, setEdit }) => {
-  const { setProducts, dtProducts } = useProducts();
+  const { setProductImages, dtProductImages } = useProductImages();
   // state
   const [page, setPage] = useState<number>(1);
   const [limit, setLimit] = useState<number>(10);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [indexBox, setIndexBox] = useState<number>(-1);
+  const [showSlides, setShowSlides] = useState<never>();
   // search params
   const searchParams = useSearchParams();
   const sortby = searchParams?.get("sortby") || "";
   const order = searchParams?.get("order") || "";
   const search = searchParams?.get("cari") || "";
-  // router
-  const router = useRouter();
 
   // Define the debounced function outside of `useCallback`
-  const debouncedFetchProducts = _.debounce((fetchProducts) => {
-    fetchProducts();
+  const debouncedFetchproductImages = _.debounce((fetchproductImages) => {
+    fetchproductImages();
   }, 500); // 500ms delay
 
-  const fetchProducts = useCallback(async () => {
+  const fetchproductImages = useCallback(async () => {
     setLimit(10);
-    await setProducts({
+    await setProductImages({
       page,
       limit,
       search,
@@ -49,35 +50,60 @@ const ShowData: FC<Props> = ({ setDelete, setEdit }) => {
       order,
     });
     setIsLoading(false);
-  }, [setProducts, page, limit, search, sortby, order]);
+  }, [setProductImages, page, limit, search, sortby, order]);
 
   useEffect(() => {
-    debouncedFetchProducts(fetchProducts);
+    debouncedFetchproductImages(fetchproductImages);
 
     // Cleanup debounce
     return () => {
-      debouncedFetchProducts.cancel();
+      debouncedFetchproductImages.cancel();
     };
   }, [search, sortby, order, page, limit]);
 
   // table
-  const headTable = ["No", "Jenis", "Nama", "Aksi"];
-  const tableBodies = ["category.category_nm", "product_nm"];
+  const headTable = [
+    "No",
+    "Nama",
+    "Tipe",
+    "Lokasi",
+    "Kondisi",
+    "Jumlah",
+    "Deskripsi",
+    "Gambar",
+    "Aksi",
+  ];
+  const tableBodies = [
+    "nm_facility",
+    "type",
+    "location",
+    "condition",
+    "quantity",
+    "description",
+    "img_facility",
+  ];
 
-  const gotTo = (href: string) => router.push(href);
-
-  const costume = (row: ProductsTypes) => {
-    return (
-      <div className="flex space-x-4 mx-2">
-        <BsCake
-          className="cursor-pointer hover:text-primary"
-          onClick={() => gotTo(`/admin/foods/${row.id}/variants`)}
-        />
-      </div>
+  useEffect(() => {
+    setShowSlides(
+      lightImgDB({
+        data: dtProductImages?.data,
+        picture: "img_facility",
+        title: { path: "nm_facility" },
+        description: { path: "description" },
+        width: 3840,
+        height: 5760,
+      })
     );
-  };
+  }, [dtProductImages?.data]);
+
   return (
     <div className="flex-1 flex-col max-w-full h-full overflow-auto">
+      {/* lightBox */}
+      <LightPlugins
+        index={indexBox}
+        setIndex={setIndexBox}
+        slides={showSlides}
+      />
       {isLoading ? (
         <LoadingSpiner />
       ) : (
@@ -86,21 +112,22 @@ const ShowData: FC<Props> = ({ setDelete, setEdit }) => {
             <TablesDefault
               headTable={headTable}
               tableBodies={tableBodies}
-              dataTable={dtProducts?.data}
+              dataTable={dtProductImages?.data}
               page={page}
               limit={limit}
               setEdit={setEdit}
               setDelete={setDelete}
               ubah={true}
               hapus={true}
-              costume={costume}
+              sorter="nm_facility"
+              setIndexBox={setIndexBox}
             />
           </div>
-          {dtProducts?.last_page > 1 && (
+          {dtProductImages?.last_page > 1 && (
             <div className="mt-4">
               <PaginationDefault
-                currentPage={dtProducts?.current_page}
-                totalPages={dtProducts?.last_page}
+                currentPage={dtProductImages?.current_page}
+                totalPages={dtProductImages?.last_page}
                 setPage={setPage}
               />
             </div>

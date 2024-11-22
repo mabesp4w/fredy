@@ -3,6 +3,7 @@
 import { Suspense, useEffect, useState } from "react";
 
 import ShowData from "./ShowData";
+import Form from "./form/Form";
 import ModalDelete from "@/components/modal/ModalDelete";
 import { Toaster } from "react-hot-toast";
 import toastShow from "@/utils/toast-show";
@@ -10,19 +11,18 @@ import BtnDefault from "@/components/button/BtnDefault";
 import { useWelcomeContext } from "@/context/WelcomeContext";
 import Searching from "./Searching";
 import { useForm } from "react-hook-form";
-import useSubDistricts from "@/stores/crud/SubDistricts";
-import SubDistrictsTypes from "@/types/SubDistricts";
-import Form from "./form/Form";
+import useProductImages from "@/stores/crud/ProductImages";
+import ProductImagesTypes from "@/types/ProductImages";
 
 // type setDelete
 type Delete = {
   id?: number | string;
   isDelete: boolean;
 };
-// subDistricts
-const SubDistricts = () => {
+// productImages
+const ProductImages = () => {
   // context
-  const halaman = "Kecamatan";
+  const halaman = "Fasilitas";
   const { setWelcome } = useWelcomeContext();
 
   useEffect(() => {
@@ -30,19 +30,19 @@ const SubDistricts = () => {
     return () => {};
   }, [setWelcome]);
   // store
-  const { removeData } = useSubDistricts();
+  const { removeData } = useProductImages();
   // state
   const [showModal, setShowModal] = useState(false);
   const [showDelete, setShowDelete] = useState<boolean>(false);
   const [idDel, setIdDel] = useState<number | string>();
-  const [dtEdit, setDtEdit] = useState<SubDistrictsTypes | null>();
+  const [dtEdit, setDtEdit] = useState<ProductImagesTypes | null>();
 
   const handleTambah = () => {
     setShowModal(true);
     setDtEdit(null);
   };
 
-  const setEdit = (row: SubDistrictsTypes) => {
+  const setEdit = (row: ProductImagesTypes) => {
     setShowModal(true);
     setDtEdit(row);
   };
@@ -77,7 +77,7 @@ const SubDistricts = () => {
           setDelete={setDelete}
         />
         <div className="mb-4 flex justify-between">
-          <p>Silahkan Mengolah data SubDistricts</p>
+          <p>Silahkan Mengolah data ProductImages</p>
           <BtnDefault onClick={handleTambah}>Tambah Data</BtnDefault>
         </div>
       </div>
@@ -92,11 +92,11 @@ const SubDistricts = () => {
         />
       </div>
 
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense>
         <ShowData setDelete={setDelete} setEdit={setEdit} />
       </Suspense>
     </div>
   );
 };
 
-export default SubDistricts;
+export default ProductImages;

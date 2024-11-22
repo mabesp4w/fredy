@@ -10,8 +10,8 @@ import BtnDefault from "@/components/button/BtnDefault";
 import { useWelcomeContext } from "@/context/WelcomeContext";
 import Searching from "./Searching";
 import { useForm } from "react-hook-form";
-import useSubDistricts from "@/stores/crud/SubDistricts";
-import SubDistrictsTypes from "@/types/SubDistricts";
+import useVariants from "@/stores/crud/Variants";
+import VariantsTypes from "@/types/Variants";
 import Form from "./form/Form";
 
 // type setDelete
@@ -19,10 +19,11 @@ type Delete = {
   id?: number | string;
   isDelete: boolean;
 };
-// subDistricts
-const SubDistricts = () => {
+// variants
+const Variants = ({ params }: { params: { productId: string } }) => {
+  console.log({ params });
   // context
-  const halaman = "Kecamatan";
+  const halaman = "Variant";
   const { setWelcome } = useWelcomeContext();
 
   useEffect(() => {
@@ -30,19 +31,19 @@ const SubDistricts = () => {
     return () => {};
   }, [setWelcome]);
   // store
-  const { removeData } = useSubDistricts();
+  const { removeData } = useVariants();
   // state
   const [showModal, setShowModal] = useState(false);
   const [showDelete, setShowDelete] = useState<boolean>(false);
   const [idDel, setIdDel] = useState<number | string>();
-  const [dtEdit, setDtEdit] = useState<SubDistrictsTypes | null>();
+  const [dtEdit, setDtEdit] = useState<VariantsTypes | null>();
 
   const handleTambah = () => {
     setShowModal(true);
     setDtEdit(null);
   };
 
-  const setEdit = (row: SubDistrictsTypes) => {
+  const setEdit = (row: VariantsTypes) => {
     setShowModal(true);
     setDtEdit(row);
   };
@@ -70,6 +71,7 @@ const SubDistricts = () => {
           showModal={showModal}
           setShowModal={setShowModal}
           halaman={halaman}
+          productId={params.productId}
         />
         <ModalDelete
           showDel={showDelete}
@@ -77,7 +79,7 @@ const SubDistricts = () => {
           setDelete={setDelete}
         />
         <div className="mb-4 flex justify-between">
-          <p>Silahkan Mengolah data SubDistricts</p>
+          <p>Silahkan Mengolah data Variants</p>
           <BtnDefault onClick={handleTambah}>Tambah Data</BtnDefault>
         </div>
       </div>
@@ -92,11 +94,11 @@ const SubDistricts = () => {
         />
       </div>
 
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense>
         <ShowData setDelete={setDelete} setEdit={setEdit} />
       </Suspense>
     </div>
   );
 };
 
-export default SubDistricts;
+export default Variants;

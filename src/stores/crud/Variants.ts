@@ -9,8 +9,8 @@ import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import { crud } from "@/services/baseURL";
 import useLogin from "../auth/login";
-import SubCategoriesTypes from "@/types/SubCategories";
-// store subCategories
+import VariantsTypes from "@/types/Variants";
+// store variants
 type Props = {
   page?: number;
   limit?: number;
@@ -20,26 +20,26 @@ type Props = {
 };
 
 type Store = {
-  dtSubCategories: {
+  dtVariants: {
     last_page: number;
     current_page: number;
-    data: SubCategoriesTypes[];
+    data: VariantsTypes[];
   };
 
-  setSubCategories: ({ page, limit, search, sortby, order }: Props) => Promise<{
+  setVariants: ({ page, limit, search, sortby, order }: Props) => Promise<{
     status: string;
     data?: {};
     error?: {};
   }>;
 
-  setShowSubCategories: (id: number | string) => Promise<{
+  setShowVariants: (id: number | string) => Promise<{
     status: string;
     data?: {};
     error?: {};
   }>;
 
   addData: (
-    data: SubCategoriesTypes
+    data: VariantsTypes
   ) => Promise<{ status: string; data?: any; error?: any }>;
 
   removeData: (
@@ -48,29 +48,23 @@ type Store = {
 
   updateData: (
     id: number | string,
-    data: SubCategoriesTypes
+    data: VariantsTypes
   ) => Promise<{ status: string; data?: any; error?: any }>;
 };
 
-const useSubCategories = create(
+const useVariants = create(
   devtools<Store>((set) => ({
-    dtSubCategories: {
+    dtVariants: {
       last_page: 0,
       current_page: 0,
       data: [],
     },
-    setSubCategories: async ({
-      page = 1,
-      limit = 10,
-      search,
-      sortby,
-      order,
-    }) => {
+    setVariants: async ({ page = 1, limit = 10, search, sortby, order }) => {
       try {
         const token = await useLogin.getState().setToken();
         const response = await crud({
           method: "get",
-          url: `/subCategories`,
+          url: `/variants`,
           headers: { Authorization: `Bearer ${token}` },
           params: {
             limit,
@@ -82,7 +76,7 @@ const useSubCategories = create(
         });
         set((state) => ({
           ...state,
-          dtSubCategories: response.data,
+          dtVariants: response.data.data,
         }));
         console.log({ response });
         return {
@@ -96,17 +90,17 @@ const useSubCategories = create(
         };
       }
     },
-    setShowSubCategories: async (id) => {
+    setShowVariants: async (id) => {
       try {
         const token = await useLogin.getState().setToken();
         const response = await crud({
           method: "get",
-          url: `/subCategories/${id}`,
+          url: `/variants/${id}`,
           headers: { Authorization: `Bearer ${token}` },
         });
         set((state) => ({
           ...state,
-          dtSubCategories: response.data.data,
+          dtVariants: response.data.data,
         }));
         return {
           status: "berhasil",
@@ -124,17 +118,17 @@ const useSubCategories = create(
         const token = await useLogin.getState().setToken();
         const res = await crud({
           method: "post",
-          url: `/subCategories`,
+          url: `/variants`,
           headers: {
             Authorization: `Bearer ${token}`,
           },
           data: row,
         });
         set((prevState) => ({
-          dtSubCategories: {
-            last_page: prevState.dtSubCategories.last_page,
-            current_page: prevState.dtSubCategories.current_page,
-            data: [res.data.data, ...prevState.dtSubCategories.data],
+          dtVariants: {
+            last_page: prevState.dtVariants.last_page,
+            current_page: prevState.dtVariants.current_page,
+            data: [res.data.data, ...prevState.dtVariants.data],
           },
         }));
         return {
@@ -153,14 +147,14 @@ const useSubCategories = create(
         const token = await useLogin.getState().setToken();
         const res = await crud({
           method: "delete",
-          url: `/subCategories/${id}`,
+          url: `/variants/${id}`,
           headers: { Authorization: `Bearer ${token}` },
         });
         set((prevState) => ({
-          dtSubCategories: {
-            last_page: prevState.dtSubCategories.last_page,
-            current_page: prevState.dtSubCategories.current_page,
-            data: prevState.dtSubCategories.data.filter(
+          dtVariants: {
+            last_page: prevState.dtVariants.last_page,
+            current_page: prevState.dtVariants.current_page,
+            data: prevState.dtVariants.data.filter(
               (item: any) => item.id !== id
             ),
           },
@@ -181,15 +175,15 @@ const useSubCategories = create(
         const token = await useLogin.getState().setToken();
         const response = await crud({
           method: "PUT",
-          url: `/subCategories/${id}`,
+          url: `/variants/${id}`,
           headers: { Authorization: `Bearer ${token}` },
           data: row,
         });
         set((prevState) => ({
-          dtSubCategories: {
-            last_page: prevState.dtSubCategories.last_page,
-            current_page: prevState.dtSubCategories.current_page,
-            data: prevState.dtSubCategories.data.map((item: any) => {
+          dtVariants: {
+            last_page: prevState.dtVariants.last_page,
+            current_page: prevState.dtVariants.current_page,
+            data: prevState.dtVariants.data.map((item: any) => {
               if (item.id === id) {
                 return {
                   ...item,
@@ -215,4 +209,4 @@ const useSubCategories = create(
   }))
 );
 
-export default useSubCategories;
+export default useVariants;
