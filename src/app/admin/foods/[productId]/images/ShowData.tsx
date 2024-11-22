@@ -6,10 +6,10 @@ import TablesDefault from "@/components/tables/TablesDefault";
 import { useSearchParams } from "next/navigation";
 import { FC, useCallback, useEffect, useState } from "react";
 import _ from "lodash";
-import lightImgDB from "@/components/lightBox/lightImgDB";
 import LightPlugins from "@/components/lightBox/LightPlugins";
 import ProductImagesTypes from "@/types/ProductImages";
 import useProductImages from "@/stores/crud/ProductImages";
+import lightImgDB from "@/components/lightBox/lightImgDB";
 
 type DeleteProps = {
   id?: number | string;
@@ -62,34 +62,16 @@ const ShowData: FC<Props> = ({ setDelete, setEdit }) => {
   }, [search, sortby, order, page, limit]);
 
   // table
-  const headTable = [
-    "No",
-    "Nama",
-    "Tipe",
-    "Lokasi",
-    "Kondisi",
-    "Jumlah",
-    "Deskripsi",
-    "Gambar",
-    "Aksi",
-  ];
-  const tableBodies = [
-    "nm_facility",
-    "type",
-    "location",
-    "condition",
-    "quantity",
-    "description",
-    "img_facility",
-  ];
+  const headTable = ["No", "Position", "Gambar", "Aksi"];
+  const tableBodies = ["position", "product_img"];
 
   useEffect(() => {
     setShowSlides(
       lightImgDB({
         data: dtProductImages?.data,
-        picture: "img_facility",
-        title: { path: "nm_facility" },
-        description: { path: "description" },
+        picture: "product_img",
+        title: { path: "position" },
+        description: { path: "" },
         width: 3840,
         height: 5760,
       })

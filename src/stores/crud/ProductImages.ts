@@ -90,7 +90,7 @@ const useProductImages = create(
             product_id,
           },
         });
-        set((state) => ({ ...state, dtProductImages: response.data }));
+        set((state) => ({ ...state, dtProductImages: response.data.data }));
         return {
           status: "berhasil",
           data: response.data,

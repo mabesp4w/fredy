@@ -13,6 +13,7 @@ import { useForm } from "react-hook-form";
 import useVariants from "@/stores/crud/Variants";
 import VariantsTypes from "@/types/Variants";
 import Form from "./form/Form";
+import useProducts from "@/stores/crud/Products";
 
 // type setDelete
 type Delete = {
@@ -21,22 +22,29 @@ type Delete = {
 };
 // variants
 const Variants = ({ params }: { params: { productId: string } }) => {
-  console.log({ params });
+  const { productId } = params;
+  // store
+  const { removeData } = useVariants();
+  const { setShowProducts, showProduct } = useProducts();
   // context
   const halaman = "Variant";
   const { setWelcome } = useWelcomeContext();
 
-  useEffect(() => {
-    setWelcome(`Halaman ${halaman}`);
-    return () => {};
-  }, [setWelcome]);
-  // store
-  const { removeData } = useVariants();
   // state
   const [showModal, setShowModal] = useState(false);
   const [showDelete, setShowDelete] = useState<boolean>(false);
   const [idDel, setIdDel] = useState<number | string>();
   const [dtEdit, setDtEdit] = useState<VariantsTypes | null>();
+
+  // getProduct
+  useEffect(() => {
+    setShowProducts(productId);
+  }, [productId, setShowProducts, showProduct]);
+
+  useEffect(() => {
+    setWelcome(`Halaman ${halaman} - ${showProduct?.product_nm}`);
+    return () => {};
+  }, [setWelcome, showProduct?.product_nm]);
 
   const handleTambah = () => {
     setShowModal(true);
@@ -71,7 +79,7 @@ const Variants = ({ params }: { params: { productId: string } }) => {
           showModal={showModal}
           setShowModal={setShowModal}
           halaman={halaman}
-          productId={params.productId}
+          productId={productId}
         />
         <ModalDelete
           showDel={showDelete}

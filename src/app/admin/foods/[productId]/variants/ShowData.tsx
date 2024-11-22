@@ -3,11 +3,12 @@
 import LoadingSpiner from "@/components/loading/LoadingSpiner";
 import PaginationDefault from "@/components/pagination/PaginationDefault";
 import TablesDefault from "@/components/tables/TablesDefault";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { FC, useCallback, useEffect, useState } from "react";
 import _ from "lodash";
 import useVariants from "@/stores/crud/Variants";
 import VariantsTypes from "@/types/Variants";
+import { BsImage } from "react-icons/bs";
 
 type DeleteProps = {
   id?: number | string;
@@ -30,6 +31,8 @@ const ShowData: FC<Props> = ({ setDelete, setEdit }) => {
   const sortby = searchParams?.get("sortby") || "";
   const order = searchParams?.get("order") || "";
   const search = searchParams?.get("cari") || "";
+  // router
+  const router = useRouter();
 
   // Define the debounced function outside of `useCallback`
   const debouncedFetchVariants = _.debounce((fetchVariants) => {
@@ -58,13 +61,15 @@ const ShowData: FC<Props> = ({ setDelete, setEdit }) => {
   }, [search, sortby, order, page, limit]);
 
   // table
-  const headTable = ["No", "Kecamatan", "Kelurahan", "Ongkos", "Aksi"];
-  const tableBodies = [
-    "sub_district.sub_district_nm",
-    "village_nm",
-    "shipping_cost",
-  ];
+  const headTable = ["No", "Variasi", "Harga", "Harga", "Stok", "Aksi"];
+  const tableBodies = ["attribute_nm", "variant_nm", "price", "stock"];
 
+  const costume = (row: VariantsTypes) => (
+    <BsImage
+      className="cursor-pointer hover:text-primary"
+      onClick={() => router.push(`/admin/foods/${row.id}/images`)}
+    />
+  );
   return (
     <div className="flex-1 flex-col max-w-full h-full overflow-auto">
       {isLoading ? (
@@ -82,6 +87,7 @@ const ShowData: FC<Props> = ({ setDelete, setEdit }) => {
               setDelete={setDelete}
               ubah={true}
               hapus={true}
+              costume={costume}
             />
           </div>
           {dtVariants?.last_page > 1 && (

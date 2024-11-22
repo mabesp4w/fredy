@@ -49,13 +49,13 @@ const getProperty = (obj: any, prop: any, index: number, setIndexBox: any) => {
     }
     // check currecy
     // date pros
-    const currencyProps = ["shipping_cost"];
+    const currencyProps = ["shipping_cost", "price"];
     // cek date
     if (currencyProps.includes(prop)) {
       return showRupiah(obj);
     }
     // cek image
-    const fileProps = ["gambar", "foto"];
+    const fileProps = ["product_img", "foto"];
     // cek image
     if (fileProps.includes(prop)) {
       const extension = obj.split(".").pop();

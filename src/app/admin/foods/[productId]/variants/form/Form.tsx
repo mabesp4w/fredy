@@ -44,12 +44,22 @@ const Form = ({
   // reset form
   const resetForm = () => {
     setValue("id", "");
+    setValue("variant_nm", "");
+    setValue("attribute_nm", "");
+    setValue("price", 0);
+    setValue("stock", 0);
+    setValue("description", "");
   };
 
   // data edit
   useEffect(() => {
     if (dtEdit) {
       setValue("id", dtEdit.id);
+      setValue("variant_nm", dtEdit.variant_nm);
+      setValue("attribute_nm", dtEdit.attribute_nm);
+      setValue("price", dtEdit.price);
+      setValue("stock", dtEdit.stock);
+      setValue("description", dtEdit.description);
     } else {
       resetForm();
     }

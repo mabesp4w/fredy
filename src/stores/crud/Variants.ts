@@ -1,3 +1,5 @@
+/** @format */
+
 /**
  * eslint-disable @typescript-eslint/no-empty-object-type
  *
@@ -25,6 +27,8 @@ type Store = {
     current_page: number;
     data: VariantsTypes[];
   };
+
+  showVariants?: VariantsTypes;
 
   setVariants: ({ page, limit, search, sortby, order }: Props) => Promise<{
     status: string;
@@ -100,7 +104,7 @@ const useVariants = create(
         });
         set((state) => ({
           ...state,
-          dtVariants: response.data.data,
+          showVariants: response.data.data,
         }));
         return {
           status: "berhasil",

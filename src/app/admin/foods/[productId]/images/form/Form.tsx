@@ -17,9 +17,16 @@ type Props = {
   setShowModal: (data: boolean) => void;
   dtEdit: ProductImagesTypes | null;
   halaman: string;
+  product_variant_id: string;
 };
 // productImages
-const Form = ({ showModal, setShowModal, dtEdit, halaman }: Props) => {
+const Form = ({
+  showModal,
+  setShowModal,
+  dtEdit,
+  halaman,
+  product_variant_id,
+}: Props) => {
   // store
   const { addData, updateData } = useProductImages();
   // state
@@ -37,12 +44,15 @@ const Form = ({ showModal, setShowModal, dtEdit, halaman }: Props) => {
   // reset form
   const resetForm = () => {
     setValue("id", "");
+    setValue("position", 2);
+    setValue("product_img", "");
   };
 
   // data edit
   useEffect(() => {
     if (dtEdit) {
       setValue("id", dtEdit.id);
+      setValue("position", dtEdit.position);
     } else {
       resetForm();
     }
@@ -50,6 +60,7 @@ const Form = ({ showModal, setShowModal, dtEdit, halaman }: Props) => {
   }, [showModal, dtEdit]);
   // simpan data
   const onSubmit: SubmitHandler<ProductImagesTypes> = async (row) => {
+    row.product_variant_id = product_variant_id;
     //  submit data
     // console.log({ row });
     // return;
