@@ -38,7 +38,6 @@ const Form = ({ showModal, setShowModal, dtEdit, halaman }: Props) => {
   const resetForm = () => {
     setValue("id", "");
     setValue("product_nm", "");
-    setValue("category_id", "");
   };
 
   // data edit

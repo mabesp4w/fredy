@@ -18,9 +18,10 @@ type DeleteProps = {
 type Props = {
   setDelete: ({ id, isDelete }: DeleteProps) => void;
   setEdit: (row: VariantsTypes) => void;
+  productId: string;
 };
 
-const ShowData: FC<Props> = ({ setDelete, setEdit }) => {
+const ShowData: FC<Props> = ({ setDelete, setEdit, productId }) => {
   const { setVariants, dtVariants } = useVariants();
   // state
   const [page, setPage] = useState<number>(1);
@@ -47,9 +48,10 @@ const ShowData: FC<Props> = ({ setDelete, setEdit }) => {
       search,
       sortby,
       order,
+      product_id: productId,
     });
     setIsLoading(false);
-  }, [setVariants, page, limit, search, sortby, order]);
+  }, [setVariants, page, limit, search, sortby, order, productId]);
 
   useEffect(() => {
     debouncedFetchVariants(fetchVariants);

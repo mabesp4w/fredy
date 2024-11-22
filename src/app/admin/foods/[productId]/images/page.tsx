@@ -109,7 +109,11 @@ const ProductImages = ({ params }: { params: { productId: string } }) => {
       </div>
 
       <Suspense>
-        <ShowData setDelete={setDelete} setEdit={setEdit} />
+        <ShowData
+          setDelete={setDelete}
+          setEdit={setEdit}
+          product_variant_id={productId}
+        />
       </Suspense>
     </div>
   );

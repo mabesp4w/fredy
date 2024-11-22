@@ -14,6 +14,7 @@ import useVariants from "@/stores/crud/Variants";
 import VariantsTypes from "@/types/Variants";
 import Form from "./form/Form";
 import useProducts from "@/stores/crud/Products";
+import Link from "next/link";
 
 // type setDelete
 type Delete = {
@@ -86,6 +87,12 @@ const Variants = ({ params }: { params: { productId: string } }) => {
           setShowDel={setShowDelete}
           setDelete={setDelete}
         />
+        <Link
+          className="text-neutral underline hover:no-underline"
+          href={`/admin/foods/products`}
+        >
+          Kembali
+        </Link>
         <div className="mb-4 flex justify-between">
           <p>Silahkan Mengolah data Variants</p>
           <BtnDefault onClick={handleTambah}>Tambah Data</BtnDefault>
@@ -103,7 +110,11 @@ const Variants = ({ params }: { params: { productId: string } }) => {
       </div>
 
       <Suspense>
-        <ShowData setDelete={setDelete} setEdit={setEdit} />
+        <ShowData
+          setDelete={setDelete}
+          setEdit={setEdit}
+          productId={productId}
+        />
       </Suspense>
     </div>
   );

@@ -17,7 +17,7 @@ type Props = {
   search?: string;
   sortby?: string;
   order?: string;
-  product_id?: number | string;
+  product_variant_id?: number | string;
 };
 
 type Store = {
@@ -33,7 +33,7 @@ type Store = {
     search,
     sortby,
     order,
-    product_id,
+    product_variant_id,
   }: Props) => Promise<{
     status: string;
     data?: {};
@@ -73,7 +73,7 @@ const useProductImages = create(
       search,
       sortby,
       order,
-      product_id,
+      product_variant_id,
     }) => {
       try {
         const token = await useLogin.getState().setToken();
@@ -87,7 +87,7 @@ const useProductImages = create(
             search,
             sortby,
             order,
-            product_id,
+            product_variant_id,
           },
         });
         set((state) => ({ ...state, dtProductImages: response.data.data }));

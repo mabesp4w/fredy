@@ -19,6 +19,7 @@ type Props = {
   search?: string;
   sortby?: string;
   order?: string;
+  product_id?: number | string;
 };
 
 type Store = {
@@ -30,7 +31,14 @@ type Store = {
 
   showVariants?: VariantsTypes;
 
-  setVariants: ({ page, limit, search, sortby, order }: Props) => Promise<{
+  setVariants: ({
+    page,
+    limit,
+    search,
+    sortby,
+    order,
+    product_id,
+  }: Props) => Promise<{
     status: string;
     data?: {};
     error?: {};
@@ -63,7 +71,14 @@ const useVariants = create(
       current_page: 0,
       data: [],
     },
-    setVariants: async ({ page = 1, limit = 10, search, sortby, order }) => {
+    setVariants: async ({
+      page = 1,
+      limit = 10,
+      search,
+      sortby,
+      order,
+      product_id,
+    }) => {
       try {
         const token = await useLogin.getState().setToken();
         const response = await crud({
@@ -76,6 +91,7 @@ const useVariants = create(
             search,
             sortby,
             order,
+            product_id,
           },
         });
         set((state) => ({

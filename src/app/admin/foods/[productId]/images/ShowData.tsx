@@ -19,9 +19,10 @@ type DeleteProps = {
 type Props = {
   setDelete: ({ id, isDelete }: DeleteProps) => void;
   setEdit: (row: ProductImagesTypes) => void;
+  product_variant_id: string;
 };
 
-const ShowData: FC<Props> = ({ setDelete, setEdit }) => {
+const ShowData: FC<Props> = ({ setDelete, setEdit, product_variant_id }) => {
   const { setProductImages, dtProductImages } = useProductImages();
   // state
   const [page, setPage] = useState<number>(1);
@@ -48,9 +49,18 @@ const ShowData: FC<Props> = ({ setDelete, setEdit }) => {
       search,
       sortby,
       order,
+      product_variant_id,
     });
     setIsLoading(false);
-  }, [setProductImages, page, limit, search, sortby, order]);
+  }, [
+    setProductImages,
+    page,
+    limit,
+    search,
+    sortby,
+    order,
+    product_variant_id,
+  ]);
 
   useEffect(() => {
     debouncedFetchproductImages(fetchproductImages);
@@ -101,7 +111,7 @@ const ShowData: FC<Props> = ({ setDelete, setEdit }) => {
               setDelete={setDelete}
               ubah={true}
               hapus={true}
-              sorter="nm_facility"
+              sorter="position"
               setIndexBox={setIndexBox}
             />
           </div>
