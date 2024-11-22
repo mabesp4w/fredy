@@ -2,7 +2,7 @@
 
 import { FC } from "react";
 import Link from "next/link";
-import { BsArrowDownShort, BsArrowRightShort } from "react-icons/bs";
+import { BsChevronDown, BsChevronRight } from "react-icons/bs";
 import { AnimatePresence } from "framer-motion";
 import SubMenu from "./SubMenuNav";
 import MenuTypes from "@/types/MenuTypes";
@@ -51,7 +51,11 @@ const MenuItem: FC<MenuItemProps> = ({
         <span>{item.name}</span>
         {item.subMenus && (
           <span className="ml-1">
-            {isHovered ? <BsArrowDownShort /> : <BsArrowRightShort />}
+            {isHovered ? (
+              <BsChevronDown size={10} />
+            ) : (
+              <BsChevronRight size={10} />
+            )}
           </span>
         )}
       </Link>

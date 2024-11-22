@@ -1,42 +1,54 @@
 /** @format */
+import { BASE_URL } from "@/services/baseURL";
+import CategoriesTypes from "@/types/Categories";
 import MenuTypes from "@/types/MenuTypes";
-import { BsActivity, BsHouseDoor, BsNewspaper, BsPerson } from "react-icons/bs";
+import axios from "axios";
+import { BsHouseDoor, BsNewspaper, BsPerson } from "react-icons/bs";
 const createUrl = (path: string) => `${path}`;
 
 const setUsersMenus = async () => {
+  // fetch categories from api axios
+  const res = await axios.get(`${BASE_URL}/api/categories/all`);
+  const categories = res.data.data;
+
   const ListMenu: MenuTypes[] = [
     {
       name: "Home",
       href: createUrl("/dashboard"),
       icon: <BsHouseDoor />,
     },
-    {
-      name: "Women",
-      href: createUrl("/announcements"),
-      icon: <BsActivity />,
-    },
 
     {
-      name: "Galeri",
-      slug: "galleries",
+      name: "Menu Makan",
+      slug: "menus",
       icon: <BsPerson />,
-      subMenus: [
-        {
-          name: "Foto",
-          href: createUrl("/galleries/photos"),
-        },
-        {
-          name: "Vidio",
-          href: createUrl("/galleries/videos"),
-        },
-      ],
+      subMenus: [],
     },
     {
-      name: "Man",
+      name: "Galeri",
+      href: createUrl("/news"),
+      icon: <BsNewspaper />,
+    },
+    {
+      name: "Tentang Kami",
       href: createUrl("/news"),
       icon: <BsNewspaper />,
     },
   ];
+
+  // Cari indeks dari item menu "Menu"
+  const menuIndex = ListMenu.findIndex((menu) => menu.slug === "menus");
+  if (menuIndex !== -1) {
+    // Tambahkan setiap kategori ke dalam subMenus dari item menu "Menu"
+    categories.forEach((category: CategoriesTypes) => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      ListMenu[menuIndex].subMenus.push({
+        name: category.category_nm,
+        href: createUrl(`/categories/${category.id}`),
+      });
+    });
+  }
 
   return ListMenu;
 };

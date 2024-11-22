@@ -7,9 +7,10 @@ import Rellax from "rellax";
 type Props = {
   children: React.ReactNode;
   speed?: number;
+  className?: string;
 };
 
-const RellaxWrapper: FC<Props> = ({ children, speed = -7 }) => {
+const RellaxWrapper: FC<Props> = ({ children, speed = -7, className }) => {
   const rellaxRef = useRef(null);
 
   useEffect(() => {
@@ -23,7 +24,11 @@ const RellaxWrapper: FC<Props> = ({ children, speed = -7 }) => {
     }
   }, [speed]);
 
-  return <div ref={rellaxRef}>{children}</div>;
+  return (
+    <div ref={rellaxRef} className={className}>
+      {children}
+    </div>
+  );
 };
 
 export default RellaxWrapper;

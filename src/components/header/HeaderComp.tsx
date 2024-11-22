@@ -44,6 +44,7 @@ const HeaderComp = () => {
             className="mx-auto mb-3"
             width={300}
             height={100}
+            priority
           />
         </div>
         <div className="w-full flex items-center justify-end">

@@ -26,6 +26,9 @@ export default {
         "dapoer-alea": "url('/images/dapoer-alea.jpg')",
       },
     },
+    container: {
+      center: true,
+    },
   },
   daisyui: {
     themes: [
@@ -38,8 +41,6 @@ export default {
           "base-100": "#ffffff",
         },
       },
-      "dark",
-      "cupcake",
     ],
   },
   plugins: [daisyui],

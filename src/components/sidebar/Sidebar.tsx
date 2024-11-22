@@ -84,7 +84,7 @@ const Sidebar: FC<Props> = ({ type = "admin" }) => {
               height={120}
             />
           </div>
-          <ul className="space-y-2 grow w-full h-full overflow-auto scrollbar list-none p-0 select-none">
+          <ul className="space-y-2 grow w-full h-full overflow-auto scrollbar list-none p-0 select-none dark:text-neutral">
             {menus &&
               menus.map((menu, index) => {
                 const isActive = pathname === menu.href;

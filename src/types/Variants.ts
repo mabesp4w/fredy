@@ -15,7 +15,7 @@ export default interface VariantsTypes {
   stock: number;
   description: string;
   product: ProductsTypes;
-  product_image: ProductImagesTypes[];
+  product_variant_images: ProductImagesTypes[];
   review: ReviewsTypes[];
   order_item: OrderItemsTypes[];
 }
