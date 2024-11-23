@@ -16,6 +16,7 @@ type Props = {
   limit?: number;
   search?: string;
   category_id?: string;
+  product_id?: string;
 };
 
 type Store = {
@@ -24,6 +25,9 @@ type Store = {
     current_page: number;
     data: ProductsTypes[];
   };
+
+  showProduct?: ProductsTypes;
+
   setProducts: ({ page, limit, search }: Props) => Promise<{
     status: string;
     data?: {};
@@ -50,6 +54,11 @@ type Store = {
     bestSellers: ProductsTypes[];
     newProduct: ProductsTypes[];
   };
+  setShowProducts: (id: number | string) => Promise<{
+    status: string;
+    data?: {};
+    error?: {};
+  }>;
   getProductIds: (ids: any) => Promise<{
     status: string;
     data?: {};
@@ -128,6 +137,25 @@ const useProductsApi = create(
           url: `/products/welcome`,
         });
         set((state) => ({ ...state, dtProductWelcome: response.data.data }));
+        return {
+          status: "berhasil",
+          data: response.data,
+        };
+      } catch (error: any) {
+        return {
+          status: "error",
+          error: error.response.data,
+        };
+      }
+    },
+    setShowProducts: async (id) => {
+      try {
+        const response = await api({
+          method: "get",
+          url: `/products/detail/${id}`,
+          headers: { Authorization: `Bearer ${await token()}` },
+        });
+        set((state) => ({ ...state, showProduct: response.data.data }));
         return {
           status: "berhasil",
           data: response.data,

@@ -1,5 +1,6 @@
 /** @format */
 
+import FooterComp from "@/components/footer/FooterComp";
 import HeaderComp from "@/components/header/HeaderComp";
 import HeaderFixed from "@/components/header/HeaderFixed";
 import React from "react";
@@ -17,7 +18,7 @@ const layout = ({ children }: Props) => {
           <HeaderComp />
         </header>
         <main className="flex grow my-14">{children}</main>
-        <footer>User Footer</footer>
+        <FooterComp />
       </main>
     </main>
   );

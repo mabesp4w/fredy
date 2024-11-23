@@ -14,6 +14,7 @@ import CartsTypes from "@/types/Carts";
 type Props = {
   product_id: string;
   quantity: number;
+  costumQuantity: boolean;
 };
 
 type Store = {
@@ -27,7 +28,7 @@ type Store = {
     data?: {};
     error?: {};
   }>;
-  addToCartSession: ({ product_id, quantity }: Props) => Promise<{
+  addCart: ({ product_id, quantity, costumQuantity }: Props) => Promise<{
     status: string;
     data?: {};
     error?: {};
@@ -65,11 +66,17 @@ const useCartsApi = create(
         };
       }
     },
-    addToCartSession: async ({ product_id, quantity }) => {
+    addCart: async ({ product_id, quantity = 1, costumQuantity }) => {
+      let endpoint = "";
+      if (costumQuantity) {
+        endpoint = "/carts/setCartQuantity";
+      } else {
+        endpoint = "/carts/addToCartDatabase";
+      }
       try {
         const response = await api({
           method: "get",
-          url: `/carts/getCartData`,
+          url: endpoint,
           headers: { Authorization: `Bearer ${await token()}` },
           params: {
             product_id,

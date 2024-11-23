@@ -4,6 +4,7 @@ import { BASE_URL } from "@/services/baseURL";
 import showRupiah from "@/services/rupiah";
 import ProductsTypes from "@/types/Products";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { FC } from "react";
 import { BsCartPlusFill } from "react-icons/bs";
 
@@ -12,6 +13,9 @@ type Props = {
 };
 
 const ProductLite: FC<Props> = ({ product }) => {
+  // router
+  const router = useRouter();
+
   const productWithImages = product.product_variants.filter(
     (variant) => variant.product_variant_images.length > 0
   );
@@ -22,7 +26,7 @@ const ProductLite: FC<Props> = ({ product }) => {
       : "/images/no_image.jpg";
 
   const gotoDetail = (id: string) => {
-    console.log({ id });
+    router.push(`/products/detail/${id}`);
   };
 
   const tambah = () => {

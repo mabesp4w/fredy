@@ -45,10 +45,10 @@ const Product = () => {
     <>
       {/* best sellers */}
       <div className="relative h-[26rem] ">
-        <div className="bg-neutral/20 backdrop-blur-xl h-[26rem] absolute left-1/2 transform -translate-x-1/2 -top-24 w-[96%] rounded-3xl">
+        <div className="bg-neutral/20 px-4 pt-3 backdrop-blur-xl h-[26rem] absolute left-1/2 transform -translate-x-1/2 -top-24 w-[88%] rounded-3xl">
           {dtProductWelcome?.bestSellers &&
             dtProductWelcome.bestSellers.length > 0 && (
-              <div ref={ref} className="flex items-center p-3 keen-slider">
+              <div ref={ref} className="flex items-center keen-slider">
                 {dtProductWelcome?.bestSellers?.map(
                   (item: any, index: number) => (
                     <div
