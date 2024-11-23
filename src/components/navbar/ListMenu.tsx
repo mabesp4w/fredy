@@ -14,7 +14,7 @@ const setUsersMenus = async () => {
   const ListMenu: MenuTypes[] = [
     {
       name: "Home",
-      href: createUrl("/dashboard"),
+      href: createUrl("/"),
       icon: <BsHouseDoor />,
     },
 
@@ -26,7 +26,7 @@ const setUsersMenus = async () => {
     },
     {
       name: "Galeri",
-      href: createUrl("/news"),
+      href: createUrl("/galleries"),
       icon: <BsNewspaper />,
     },
     {
@@ -45,7 +45,7 @@ const setUsersMenus = async () => {
       // @ts-expect-error
       ListMenu[menuIndex].subMenus.push({
         name: category.category_nm,
-        href: createUrl(`/categories/${category.id}`),
+        href: createUrl(`/products/${category.id}`),
       });
     });
   }

@@ -16,7 +16,7 @@ const layout = ({ children }: Props) => {
         <header className="flex flex-col">
           <HeaderComp />
         </header>
-        <main className="mx-4 flex grow my-14">{children}</main>
+        <main className="flex grow my-14">{children}</main>
         <footer>User Footer</footer>
       </main>
     </>

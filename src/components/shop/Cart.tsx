@@ -1,8 +1,8 @@
 /** @format */
 
-type Props = {};
+// type Props = {};
 
-const Cart = (props: Props) => {
+const Cart = () => {
   return <div>Cart</div>;
 };
 

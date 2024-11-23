@@ -15,6 +15,7 @@ type Props = {
   page?: number;
   limit?: number;
   search?: string;
+  category_id?: string;
 };
 
 type Store = {
@@ -24,6 +25,17 @@ type Store = {
     data: ProductsTypes[];
   };
   setProducts: ({ page, limit, search }: Props) => Promise<{
+    status: string;
+    data?: {};
+    error?: {};
+  }>;
+
+  setProductsWithParams: ({
+    page,
+    limit,
+    search,
+    category_id,
+  }: Props) => Promise<{
     status: string;
     data?: {};
     error?: {};
@@ -61,6 +73,35 @@ const useProductsApi = create(
         const response = await api({
           method: "get",
           url: `/products`,
+          headers: { Authorization: `Bearer ${await token()}` },
+          params: {
+            limit,
+            page,
+            search,
+          },
+        });
+        set((state) => ({ ...state, dtProducts: response.data }));
+        return {
+          status: "berhasil",
+          data: response.data,
+        };
+      } catch (error: any) {
+        return {
+          status: "error",
+          error: error.response.data,
+        };
+      }
+    },
+    setProductsWithParams: async ({
+      page = 1,
+      limit = 10,
+      search,
+      category_id,
+    }) => {
+      try {
+        const response = await api({
+          method: "get",
+          url: `/products/category/${category_id}`,
           headers: { Authorization: `Bearer ${await token()}` },
           params: {
             limit,

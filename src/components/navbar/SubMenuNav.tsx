@@ -25,8 +25,8 @@ const SubMenu: FC<Props> = ({ subMenus, addClass }) => {
 
   return (
     <motion.ul
-      className={`absolute top-6 flex flex-col bg-primary/60 shadow-lg rounded-lg z-50 ${
-        addClass ? addClass : "left-4 pt-4"
+      className={`absolute top-8 -left-3 w-[260px] grid grid-cols-2 bg-primary shadow-lg rounded-lg z-50 ${
+        addClass ? addClass : "left-4 pt-2"
       }`}
       initial="hidden"
       animate="visible"
@@ -52,7 +52,7 @@ const SubMenu: FC<Props> = ({ subMenus, addClass }) => {
             <Link
               href={item.href || "#"}
               className={`flex items-center ${
-                isActive ? "text-primary font-bold" : ""
+                isActive ? "text-accent font-bold" : ""
               } block py-2 px-4 text-color-2 hover:text-accent hover:font-bold transition-colors duration-300 whitespace-nowrap text-[13px]`}
             >
               <span>{item.name}</span>

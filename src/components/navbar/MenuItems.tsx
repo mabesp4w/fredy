@@ -45,7 +45,7 @@ const MenuItem: FC<MenuItemProps> = ({
       <Link
         href={item.href || "#"}
         className={`${
-          isActive ? "text-primary font-bold" : ""
+          isActive ? "text-accent font-bold" : ""
         } flex items-center py-1 text-muted`}
       >
         <span>{item.name}</span>

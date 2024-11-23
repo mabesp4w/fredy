@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { useWelcomeContext } from "@/context/WelcomeContext";
 import NavbarComp from "../navbar/NavbarComp";
-import Image from "next/image";
 
 const HeaderComp = () => {
   const { setIsOpen } = useMenuContext();
@@ -34,23 +33,9 @@ const HeaderComp = () => {
   // };
 
   return (
-    <main className="flex flex-col h-svh bg-dapoer-alea bg-cover bg-right text-secondary">
+    <main className="flex flex-col text-secondary">
       {/* navbar */}
-      <section className="flex justify-between items-center">
-        <div className="absolute left-0 top-0 ">
-          <Image
-            alt="logo"
-            src="/images/logo.png"
-            className="mx-auto mb-3"
-            width={300}
-            height={100}
-            priority
-          />
-        </div>
-        <div className="w-full flex items-center justify-end">
-          <NavbarComp />
-        </div>
-      </section>
+      <NavbarComp />
     </main>
   );
 };
