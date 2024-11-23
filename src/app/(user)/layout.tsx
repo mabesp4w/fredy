@@ -10,7 +10,7 @@ type Props = {
 
 const layout = ({ children }: Props) => {
   return (
-    <>
+    <main className="flex flex-col h-screen">
       <HeaderFixed />
       <main className="flex flex-col text-[16px] text-destructive min-h-full">
         <header className="flex flex-col">
@@ -19,7 +19,7 @@ const layout = ({ children }: Props) => {
         <main className="flex grow my-14">{children}</main>
         <footer>User Footer</footer>
       </main>
-    </>
+    </main>
   );
 };
 

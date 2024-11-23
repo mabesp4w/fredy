@@ -109,7 +109,7 @@ const useProductsApi = create(
             search,
           },
         });
-        set((state) => ({ ...state, dtProducts: response.data }));
+        set((state) => ({ ...state, dtProducts: response.data.data }));
         return {
           status: "berhasil",
           data: response.data,
