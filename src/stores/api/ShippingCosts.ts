@@ -19,6 +19,11 @@ type Store = {
     data?: {};
     error?: {};
   }>;
+  setShippingCostsAll: () => Promise<{
+    status: string;
+    data?: {};
+    error?: {};
+  }>;
   setShowShippingCosts: (id: string) => Promise<{
     status: string;
     data?: {};
@@ -34,6 +39,27 @@ const useShippingCostsApi = create(
         const response = await api({
           method: "get",
           url: `/shippingCosts`,
+        });
+        set((state) => ({
+          ...state,
+          dtShippingCosts: response.data.data,
+        }));
+        return {
+          status: "berhasil",
+          data: response.data,
+        };
+      } catch (error: any) {
+        return {
+          status: "error",
+          error: error.response.data,
+        };
+      }
+    },
+    setShippingCostsAll: async () => {
+      try {
+        const response = await api({
+          method: "get",
+          url: `/shippingCosts/all`,
         });
         set((state) => ({
           ...state,

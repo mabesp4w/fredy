@@ -177,7 +177,6 @@ const useProductsApi = create(
           },
           headers: { Authorization: `Bearer ${await token()}` },
         });
-        console.log({ response });
         set((state) => ({ ...state, dtProducts: response.data }));
         return {
           status: "berhasil",
