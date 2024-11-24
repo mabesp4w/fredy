@@ -69,7 +69,7 @@ const BodyForm: FC<Props> = ({
         addClass="col-span-8 lg:col-span-2"
       />
       <InputRupiah
-        label="Ongkos"
+        label="Harga"
         control={control}
         name="price"
         errors={errors.price}

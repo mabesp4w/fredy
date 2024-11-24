@@ -16,9 +16,9 @@ import {
 import "keen-slider/keen-slider.min.css";
 import ProductImagesTypes from "@/types/ProductImages";
 import VariantsTypes from "@/types/Variants";
-import useCartsApi from "@/stores/api/Carts";
 import useLogin from "@/stores/auth/login";
 import { useRouter } from "next/navigation";
+import useCartsApi from "@/stores/api/Carts";
 
 function ThumbnailPlugin(
   mainRef: MutableRefObject<KeenSliderInstance | null>
@@ -111,7 +111,7 @@ const ProductDetail: FC<Props> = ({ product }) => {
 
   // store
   const { addCart } = useCartsApi();
-  const { cekToken } = useLogin();
+  const { cekToken, dtUser } = useLogin();
   const tambah = async () => {
     const cek = await cekToken();
     if (cek?.error) {
@@ -122,9 +122,10 @@ const ProductDetail: FC<Props> = ({ product }) => {
       costumQuantity = true;
     }
     await addCart({
-      product_id: product.id,
+      product_variant_id: variant?.id,
       quantity: value,
       costumQuantity,
+      user_id: dtUser?.id,
     });
   };
 

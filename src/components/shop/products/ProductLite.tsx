@@ -2,6 +2,8 @@
 
 import { BASE_URL } from "@/services/baseURL";
 import showRupiah from "@/services/rupiah";
+import useCartsApi from "@/stores/api/Carts";
+import useLogin from "@/stores/auth/login";
 import ProductsTypes from "@/types/Products";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -15,6 +17,9 @@ type Props = {
 const ProductLite: FC<Props> = ({ product }) => {
   // router
   const router = useRouter();
+  // store
+  const { addCart } = useCartsApi();
+  const { cekToken, dtUser } = useLogin();
 
   const productWithImages = product.product_variants.filter(
     (variant) => variant.product_variant_images.length > 0
@@ -29,8 +34,17 @@ const ProductLite: FC<Props> = ({ product }) => {
     router.push(`/products/detail/${id}`);
   };
 
-  const tambah = () => {
-    console.log("tambah");
+  const tambah = async () => {
+    const cek = await cekToken();
+    if (cek?.error) {
+      return router.push("/profiles");
+    }
+
+    await addCart({
+      product_variant_id: product.product_variants[0].id,
+      quantity: 1,
+      user_id: dtUser && dtUser.id ? dtUser.id : "",
+    });
   };
 
   return (

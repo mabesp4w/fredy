@@ -63,7 +63,7 @@ const ShowData: FC<Props> = ({ setDelete, setEdit, productId }) => {
   }, [search, sortby, order, page, limit]);
 
   // table
-  const headTable = ["No", "Variasi", "Harga", "Harga", "Stok", "Aksi"];
+  const headTable = ["No", "Variasi", "Atribut", "Harga", "Stok", "Aksi"];
   const tableBodies = ["attribute_nm", "variant_nm", "price", "stock"];
 
   const costume = (row: VariantsTypes) => (

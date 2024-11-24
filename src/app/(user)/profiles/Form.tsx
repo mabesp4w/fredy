@@ -42,7 +42,6 @@ const Form = ({ showModal, setShowModal, dtEdit, user }: Props) => {
     setValue("id", "");
     setValue("nm_user", "");
     setValue("shipping_cost_id", "");
-    setValue("user_id", user.id);
     setValue("address", "");
   };
 
@@ -62,6 +61,7 @@ const Form = ({ showModal, setShowModal, dtEdit, user }: Props) => {
   // simpan data
   const onSubmit: SubmitHandler<UserInfoTypes> = async (row) => {
     row.is_active = true;
+    row.user_id = user.id;
     // console.log({ row });
     // return;
     await submitData({

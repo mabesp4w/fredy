@@ -7,8 +7,8 @@ import MenuTypes from "@/types/MenuTypes";
 import { setUsersMenus } from "./ListMenu";
 import { usePathname } from "next/navigation";
 import { BsPerson } from "react-icons/bs";
-import { IoBag } from "react-icons/io5";
 import Link from "next/link";
+import Cart from "../shop/Cart";
 
 const NavbarComp: FC = () => {
   const [menus, setMenus] = useState<MenuTypes[]>([]);
@@ -77,10 +77,7 @@ const NavbarComp: FC = () => {
               </li>
             </ul>
           </div>
-          <button className="flex gap-2 items-center rounded-fullpx-5 py-2">
-            <IoBag />
-            <span className="font-bold">Rp. 0</span>
-          </button>
+          <Cart />
         </div>
       </div>
     </div>
