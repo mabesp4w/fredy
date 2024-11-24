@@ -3,6 +3,10 @@
 import { User } from "@/types";
 import React, { useState } from "react";
 import Form from "./Form";
+import useLogout from "@/stores/auth/logout";
+import handleLogout from "@/app/auth/logout/logout";
+import LoadingSpiner from "@/components/loading/LoadingSpiner";
+import { useRouter } from "next/navigation";
 
 type Props = {
   user?: User;
@@ -10,7 +14,11 @@ type Props = {
 
 const Info = ({ user }: Props) => {
   const [showModal, setShowModal] = useState(false);
-  console.log({ user });
+  const [loadLogout, setLoadLogout] = useState(false);
+  // store
+  const { setLogout } = useLogout();
+  //   router
+  const route = useRouter();
   return (
     <div className="grid grid-cols-2 gap-x-4 mt-4">
       {/* akun */}
@@ -29,7 +37,16 @@ const Info = ({ user }: Props) => {
               </tr>
             </tbody>
           </table>
-          <button className="btn btn-accent btn-outline w-fit">Logout</button>
+          {loadLogout ? (
+            <LoadingSpiner />
+          ) : (
+            <button
+              className="btn btn-accent btn-outline w-fit"
+              onClick={() => handleLogout({ setLogout, setLoadLogout, route })}
+            >
+              Logout
+            </button>
+          )}
         </div>
       </div>
       {/* info */}
