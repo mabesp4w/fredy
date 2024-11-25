@@ -1,30 +1,36 @@
 /** @format */
 "use client";
-import InputTextDefault from "@/components/input/InputTextDefault";
-import OrdersTypes from "@/types/Orders";
+import SelectDef from "@/components/select/SelectDef";
+import ShippingStatusesTypes from "@/types/ShippingStatuses";
 import { FC } from "react";
 import { FieldErrors } from "react-hook-form";
 
 // orders
 type Props = {
   register: unknown;
-  errors: FieldErrors<OrdersTypes>;
-  dtEdit: OrdersTypes | null;
+  errors: FieldErrors<ShippingStatusesTypes>;
+  dtEdit?: ShippingStatusesTypes | null;
   control: unknown;
   watch: unknown;
   setValue: unknown;
   showModal: boolean;
 };
-const BodyForm: FC<Props> = ({ register, errors }) => {
+const BodyForm: FC<Props> = ({ control, errors }) => {
   return (
     <>
-      <InputTextDefault
-        label="Jenis Makanan"
-        name="category_nm"
-        register={register}
-        errors={errors.shipping_status?.status}
+      <SelectDef
+        name="status"
+        label="Status Kirim"
+        placeholder="Pilih Status Kirim"
+        options={[
+          { value: "dikemas", label: "Dikemas" },
+          { value: "dikirim", label: "Dikirim" },
+          { value: "selesai", label: "Selesai" },
+        ]}
+        addClass={"col-span-8"}
         required
-        addClass="col-span-8"
+        errors={errors.status}
+        control={control}
       />
     </>
   );

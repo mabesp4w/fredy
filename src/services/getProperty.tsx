@@ -30,6 +30,10 @@ const getProperty = (obj: any, prop: any, index: number, setIndexBox: any) => {
       const end_time = moment(obj["end_time"], "HH:mm:ss").format("HH:mm");
       return `${start_time} - ${end_time}`;
     }
+    if (last.includes("user_user_info_nm_user")) {
+      const userInfo = obj["user"]["user_info"][0]["nm_user"];
+      return userInfo;
+    }
     // memisahkan properti dalam bentuk array
     const l = parts.length;
     let i = 1,

@@ -24,7 +24,7 @@ interface Props {
 
 const Register = ({ setIsLoggedIn }: Props) => {
   // store
-  const { setRegister } = useLogin();
+  const { setRegister, cekToken } = useLogin();
   const router = useRouter();
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -66,6 +66,7 @@ const Register = ({ setIsLoggedIn }: Props) => {
       setIsLoggedIn(true);
       router.push(`/profiles`);
     }
+    await cekToken();
     setTimeout(() => {
       setIsLoading(false);
     }, 1000);

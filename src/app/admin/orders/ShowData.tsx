@@ -8,6 +8,8 @@ import { FC, useCallback, useEffect, useState } from "react";
 import _ from "lodash";
 import useOrders from "@/stores/crud/Orders";
 import OrdersTypes from "@/types/Orders";
+import { BsInfoCircle } from "react-icons/bs";
+import OrderDetail from "./OrderDetail";
 
 type DeleteProps = {
   id?: number | string;
@@ -25,6 +27,8 @@ const ShowData: FC<Props> = ({ setDelete, setEdit }) => {
   const [page, setPage] = useState<number>(1);
   const [limit, setLimit] = useState<number>(10);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [rowOrder, setRowOrder] = useState<OrdersTypes>();
+  const [showDet, setShowDet] = useState(false);
   // search params
   const searchParams = useSearchParams();
   const sortby = searchParams?.get("sortby") || "";
@@ -44,9 +48,12 @@ const ShowData: FC<Props> = ({ setDelete, setEdit }) => {
       search,
       sortby,
       order,
+      status: "dibayar,selesai",
     });
     setIsLoading(false);
   }, [setOrders, page, limit, search, sortby, order]);
+
+  console.log({ dtOrders });
 
   useEffect(() => {
     debouncedFetchOrders(fetchOrders);
@@ -58,8 +65,21 @@ const ShowData: FC<Props> = ({ setDelete, setEdit }) => {
   }, [search, sortby, order, page, limit]);
 
   // table
-  const headTable = ["No", "Nama", "Aksi"];
-  const tableBodies = ["category_nm"];
+  const headTable = ["No", "Nama", "Kelurahan", "Aksi"];
+  const tableBodies = ["user_user_info_nm_user", "shipping_cost.village_nm"];
+
+  const costume = (row: OrdersTypes) => {
+    return (
+      <BsInfoCircle
+        className="cursor-pointer hover:text-accent"
+        size={20}
+        onClick={() => {
+          setShowDet(true);
+          setRowOrder(row);
+        }}
+      />
+    );
+  };
 
   return (
     <div className="flex-1 flex-col max-w-full h-full overflow-auto">
@@ -78,6 +98,7 @@ const ShowData: FC<Props> = ({ setDelete, setEdit }) => {
               setDelete={setDelete}
               ubah={true}
               hapus={true}
+              costume={costume}
             />
           </div>
           {dtOrders?.last_page > 1 && (
@@ -91,6 +112,11 @@ const ShowData: FC<Props> = ({ setDelete, setEdit }) => {
           )}
         </>
       )}
+      <OrderDetail
+        setShowModal={setShowDet}
+        showModal={showDet}
+        order={rowOrder}
+      />
     </div>
   );
 };

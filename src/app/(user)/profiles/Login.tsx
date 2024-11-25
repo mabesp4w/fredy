@@ -74,7 +74,6 @@ const Login = ({ setIsLoggedIn }: Props) => {
       router.push(`/profiles`);
     }
     await cekToken();
-
     setTimeout(() => {
       setIsLoading(false);
     }, 1000);

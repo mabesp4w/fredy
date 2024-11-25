@@ -10,18 +10,18 @@ import BtnDefault from "@/components/button/BtnDefault";
 import submitData from "@/services/submitData";
 import LoadingSpiner from "@/components/loading/LoadingSpiner";
 import useOrders from "@/stores/crud/Orders";
-import OrdersTypes from "@/types/Orders";
+import ShippingStatusesTypes from "@/types/ShippingStatuses";
 
 type Props = {
   showModal: boolean;
   setShowModal: (data: boolean) => void;
-  dtEdit: OrdersTypes | null;
+  dtEdit: ShippingStatusesTypes | null;
   halaman: string;
 };
 // orders
 const Form = ({ showModal, setShowModal, dtEdit, halaman }: Props) => {
   // store
-  const { addData, updateData } = useOrders();
+  const { addData, updateData, setOrders } = useOrders();
   // state
   const [isLoading, setIsLoading] = useState(false);
   // hook form
@@ -32,28 +32,30 @@ const Form = ({ showModal, setShowModal, dtEdit, halaman }: Props) => {
     control,
     formState: { errors },
     watch,
-  } = useForm<OrdersTypes>();
+  } = useForm<ShippingStatusesTypes>();
 
   // reset form
   const resetForm = () => {
     setValue("id", "");
+    setValue("status", "");
   };
 
   // data edit
   useEffect(() => {
     if (dtEdit) {
       setValue("id", dtEdit.id);
+      setValue("status", dtEdit.status);
     } else {
       resetForm();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showModal, dtEdit]);
   // simpan data
-  const onSubmit: SubmitHandler<OrdersTypes> = async (row) => {
+  const onSubmit: SubmitHandler<ShippingStatusesTypes> = async (row) => {
     //  submit data
     // console.log({ row });
     // return;
-    submitData({
+    await submitData({
       row,
       dtEdit,
       setIsLoading,
@@ -62,6 +64,11 @@ const Form = ({ showModal, setShowModal, dtEdit, halaman }: Props) => {
       updateData,
       resetForm,
       toastShow,
+    });
+    await setOrders({
+      page: 1,
+      limit: 10,
+      status: "dibayar,selesai",
     });
   };
 
@@ -78,7 +85,7 @@ const Form = ({ showModal, setShowModal, dtEdit, halaman }: Props) => {
           <BodyForm
             register={register}
             errors={errors}
-            dtEdit={dtEdit}
+            dtEdit={dtEdit ?? null}
             control={control}
             watch={watch}
             setValue={setValue}
