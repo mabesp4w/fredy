@@ -235,7 +235,7 @@ const ProductDetail: FC<Props> = ({ product }) => {
             +
           </button>
         </div>
-        <div className="card-actions justify-between">
+        <div className="card-actions justify-end">
           <BsCartPlusFill
             className="text-accent cursor-pointer hover:text-primary"
             size={30}
@@ -244,7 +244,7 @@ const ProductDetail: FC<Props> = ({ product }) => {
               tambah();
             }}
           />
-          <button className="btn btn-outline btn-accent">Beli</button>
+          {/* <button className="btn btn-outline btn-accent">Beli</button> */}
         </div>
       </div>
     </div>

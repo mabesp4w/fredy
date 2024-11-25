@@ -69,7 +69,6 @@ const useCartsApi = create(
             user_id,
           },
         });
-        console.log({ response });
         set((state) => ({ ...state, dtCarts: response.data }));
         return {
           status: "berhasil",
