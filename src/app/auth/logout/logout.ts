@@ -26,7 +26,8 @@ const handleLogout = async ({ setLogout, setLoadLogout, route }: Props) => {
     Cookies.remove("token");
     Cookies.remove("role");
     Cookies.remove("user");
-    return route.push("/");
+    return (window.location.href = "/");
+    console.log({ route });
   }
 };
 

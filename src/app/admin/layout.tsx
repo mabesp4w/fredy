@@ -7,6 +7,7 @@ import Sidebar from "@/components/sidebar/Sidebar";
 import MenuContextProvider from "@/context/MenuContext";
 import WelcomeContextProvider from "@/context/WelcomeContext";
 import React from "react";
+import Auth from "../Auth";
 
 type Props = {
   children: React.ReactNode;
@@ -40,7 +41,7 @@ const layout = ({ children }: Props) => {
             </div>
           </div>
         </div>
-        {/* <Auth /> */}
+        <Auth />
       </WelcomeContextProvider>
     </MenuContextProvider>
   );

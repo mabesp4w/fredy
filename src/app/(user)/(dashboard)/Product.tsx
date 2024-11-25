@@ -6,6 +6,7 @@ import useProductsApi from "@/stores/api/Products";
 import { useEffect } from "react";
 import { useKeenSlider } from "keen-slider/react"; // import from 'keen-slider/react.es' for to get an ES module
 import "keen-slider/keen-slider.min.css";
+import ScrollRevealComponent from "@/components/effects/ScrollRevealComponent";
 
 const Product = () => {
   const [ref] = useKeenSlider<HTMLDivElement>({
@@ -39,12 +40,15 @@ const Product = () => {
     setProductsWelcome();
     return () => {};
   }, []);
-  console.log({ dtProductWelcome });
 
   return (
     <>
       {/* best sellers */}
-      <div className="relative h-[26rem] ">
+      <ScrollRevealComponent
+        offset={200}
+        animations="fade-right"
+        className="relative h-[26rem] "
+      >
         <div className="bg-neutral/20 px-4 pt-3 backdrop-blur-xl h-[26rem] absolute left-1/2 transform -translate-x-1/2 -top-24 w-[88%] rounded-3xl">
           {dtProductWelcome?.bestSellers &&
             dtProductWelcome.bestSellers.length > 0 && (
@@ -62,14 +66,18 @@ const Product = () => {
               </div>
             )}
         </div>
-      </div>
+      </ScrollRevealComponent>
       {/* new products */}
       <h1 className="text-2xl font-bold text-center">Produk Terbaru</h1>
       <div className="grid grid-cols-4 gap-4 p-3">
         {dtProductWelcome?.newProduct?.map((item: any, index: number) => (
-          <div key={index} className="h-full">
+          <ScrollRevealComponent
+            animations="fade-up"
+            key={index}
+            className="h-full"
+          >
             <ProductLite product={item} />
-          </div>
+          </ScrollRevealComponent>
         ))}
       </div>
     </>

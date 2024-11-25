@@ -20,7 +20,6 @@ const Profile = () => {
       if (cek?.error) {
         setIsLoggedIn(false);
       } else {
-        console.log({ cek });
         setIsLoggedIn(true);
       }
       setIsLoading(false);
