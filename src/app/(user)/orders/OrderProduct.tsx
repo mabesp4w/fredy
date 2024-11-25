@@ -18,7 +18,8 @@ const OrderProduct = ({ product_variant, quantity }: Props) => {
       : null;
   const urlImg = img
     ? `${BASE_URL}/${img.product_img}`
-    : "/images/no_image.png";
+    : "/images/no_image.jpg";
+
   return (
     <div className="w-fit">
       <div className="flex flex-col lg:flex-row gap-x-12 mb-4">

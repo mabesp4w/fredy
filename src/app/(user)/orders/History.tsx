@@ -75,13 +75,23 @@ const History = ({ order }: Props) => {
           >
             Penilaian
           </button>
-          <Penilaian
-            showModal={showModal}
-            setShowModal={setShowModal}
-            order={order}
-          />
         </div>
       )}
+      {!forReview && (
+        <div className="mt-4 self-end">
+          <button
+            className="btn btn-outline btn-accent"
+            onClick={() => setShowModal(true)}
+          >
+            Lihat Penilaian
+          </button>
+        </div>
+      )}
+      <Penilaian
+        showModal={showModal}
+        setShowModal={setShowModal}
+        order={order}
+      />
     </div>
   );
 };

@@ -55,6 +55,8 @@ const Penilaian = ({ order, showModal, setShowModal }: Props) => {
       status: order.shipping_status?.status,
     });
   };
+
+  console.log({ order });
   return (
     <ModalDefault
       showModal={showModal}
@@ -64,9 +66,15 @@ const Penilaian = ({ order, showModal, setShowModal }: Props) => {
       {order.review.length > 0 && (
         <div className="flex flex-col gap-y-4">
           {order.review.map((item) => {
+            // search order.order_items by item.product_variant_id
+            const product = order.order_items.find(
+              (product) =>
+                product.product_variant_id === item.product_variant_id
+            );
+
             return (
               <div key={item.id} className="flex flex-col border-b shadow-md">
-                <h1>{item?.product_variant?.product?.product_nm}</h1>
+                <h1>{product?.product_variant.product.product_nm}</h1>
                 <p>
                   <RatingStars rating={item?.rating} />
                 </p>
