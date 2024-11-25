@@ -18,6 +18,7 @@ const Cart = () => {
   // state
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
+  const [totalBayar, setTotalBayar] = useState(0);
   // store
   const { setCarts, removeCarts, dtCarts } = useCartsApi();
   const { cekToken, dtUser } = useLogin();
@@ -65,6 +66,18 @@ const Cart = () => {
     const { user_id, product_variant_id } = row;
     await removeCarts({ user_id, product_variant_id });
   };
+
+  useEffect(() => {
+    const totalPesan = dtCarts?.data.reduce(
+      (acc, cart) => acc + cart.product_variant.price * cart.quantity,
+      0
+    );
+
+    const shipping =
+      dtUser?.user_info && dtUser.user_info[0]?.shipping_cost?.shipping_cost;
+    setTotalBayar(totalPesan + (shipping || 0));
+    return () => {};
+  }, [dtCarts, dtUser]);
 
   const NEXT_PUBLIC_MIDTRANS_CLIENT_KEY =
     process.env.NEXT_PUBLIC_MIDTRANS_CLIENT_KEY;
@@ -171,7 +184,7 @@ const Cart = () => {
                   })}
                   {/* count total */}
                   <div className="flex justify-between">
-                    <span className="font-bold">Total:</span>
+                    <span className="font-bold">Total Pesanan:</span>
                     <span className="font-bold text-accent">
                       {showRupiah(
                         dtCarts?.data.reduce(
@@ -180,6 +193,23 @@ const Cart = () => {
                           0
                         )
                       )}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-bold">Ongkir:</span>
+                    <span className="font-bold text-accent">
+                      {showRupiah(
+                        (dtUser?.user_info &&
+                          dtUser?.user_info[0].shipping_cost.shipping_cost) ||
+                          0
+                      )}
+                    </span>
+                  </div>
+                  {/* total bayar */}
+                  <div className="flex justify-between">
+                    <span className="font-bold">Total Bayar:</span>
+                    <span className="font-bold text-accent">
+                      {showRupiah(totalBayar)}
                     </span>
                   </div>
                   {/* pembayaran */}

@@ -75,7 +75,8 @@ const Form = ({ showModal, setShowModal, dtEdit, user }: Props) => {
       toastShow,
     });
 
-    cekToken();
+    await cekToken();
+    setShowModal(false);
   };
 
   // store
