@@ -5,6 +5,7 @@ import useLogin from "@/stores/auth/login";
 import React, { useCallback, useEffect, useState } from "react";
 import PayWait from "./PayWait";
 import LoadingSpiner from "@/components/loading/LoadingSpiner";
+import History from "./History";
 
 const Orders = () => {
   const MIDTRANS_CLIENT_KEY = process.env.NEXT_PUBLIC_MIDTRANS_CLIENT_KEY;
@@ -92,10 +93,10 @@ const Orders = () => {
                       key={order.id}
                     />
                   )}
-                  {status === "dikemas" && <p>Content for Tab 2</p>}
-                  {status === "dikirim" && <p>Content for Tab 3</p>}
-                  {status === "selesai" && <p>Content for Tab 3</p>}
-                  {status === "batal" && <p>Content for Tab 3</p>}
+                  {status === "dikemas" && <History order={order} />}
+                  {status === "dikirim" && <History order={order} />}
+                  {status === "selesai" && <History order={order} />}
+                  {status === "batal" && <History order={order} />}
                 </div>
               ))
             ) : (
