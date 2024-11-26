@@ -24,14 +24,14 @@ const setUsersMenus = async () => {
       icon: <BsPerson />,
       subMenus: [],
     },
-    {
-      name: "Galeri",
-      href: createUrl("/galleries"),
-      icon: <BsNewspaper />,
-    },
+    // {
+    //   name: "Galeri",
+    //   href: createUrl("/galleries"),
+    //   icon: <BsNewspaper />,
+    // },
     {
       name: "Tentang Kami",
-      href: createUrl("/news"),
+      href: createUrl("/about"),
       icon: <BsNewspaper />,
     },
   ];
